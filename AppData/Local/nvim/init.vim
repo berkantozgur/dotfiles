@@ -9,10 +9,9 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'rstacruz/sparkup'
 Plug 'vim-syntastic/syntastic'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'ayu-theme/ayu-vim'
 Plug 'crusoexia/vim-monokai'
 Plug 'morhetz/gruvbox'
-Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'ajmwagar/vim-deus'
 call plug#end()
 
 " Basic Settings
@@ -37,14 +36,15 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 " Plugin Settings
-
+"
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1
 
 " Theme
 set background=dark
-colorscheme gruvbox
+colorscheme ayu
+let ayucolor="dark"
 
 " NERDTree
 autocmd StdinReadPre * let s:std_in=1

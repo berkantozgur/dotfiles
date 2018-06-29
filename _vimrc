@@ -10,8 +10,7 @@ Plug 'vim-syntastic/syntastic'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'morhetz/gruvbox'
 Plug 'crusoexia/vim-monokai'
-Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'ajmwagar/vim-deus'
+Plug 'ayu-theme/ayu-vim'
 call plug#end()
 
 " Basic Settings
@@ -54,8 +53,9 @@ nnoremap <C-H> <C-W><C-H>
 
 " Theme
 syntax enable
-colorscheme gruvbox
+colorscheme ayu
 set background=dark
+let ayucolor="dark"
 
 " NERDTree
 autocmd StdinReadPre * let s:std_in=1
