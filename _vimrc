@@ -4,19 +4,29 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
 Plug 'mattn/emmet-vim'
 Plug 'bronson/vim-trailing-whitespace'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'raimondi/delimitmate'
+Plug 'yggdroot/indentline'
+Plug 'tpope/vim-surround'
 Plug 'ervandew/supertab'
-Plug 'rstacruz/sparkup'
 Plug 'vim-syntastic/syntastic'
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
+
+"Themes
 Plug 'morhetz/gruvbox'
-Plug 'crusoexia/vim-monokai'
-Plug 'ayu-theme/ayu-vim'
+Plug 'Nequo/vim-allomancer'
+Plug 'mhartington/oceanic-next'
+Plug 'ajmwagar/vim-deus'
+Plug 'patstockwell/vim-monokai-tasty'
+Plug 'kaicataldo/material.vim'
+Plug 'joshdick/onedark.vim'
 call plug#end()
 
 " Basic Settings
 set t_Co=256
 set termguicolors
 set mouse=a
+set backspace=indent,eol,start
 set number
 set relativenumber
 set colorcolumn=90
@@ -37,8 +47,14 @@ set shiftround
 set expandtab
 set laststatus=1
 set incsearch
-set hlsearch
-set mouse=a
+set hls
+if has('gui_running')
+        set guifont=Hack_NF:h13
+        set guioptions-=m
+        set guioptions-=T
+        set guioptions-=r
+        set guioptions-=L
+endif
 filetype off
 filetype plugin indent on
 
@@ -50,23 +66,33 @@ nnoremap <C-H> <C-W><C-H>
 
 " Plugin Settings
 
-
 " Theme
 syntax enable
-colorscheme ayu
+let g:vim_monokai_tasty_italic = 1
 set background=dark
-let ayucolor="dark"
+colorscheme vim-monokai-tasty
 
 " NERDTree
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-let g:NERDTreeShowBookmarks=1
+let NERDTreeShowHidden = 1
+let g:NERDTreeShowBookmarks = 1
 map <tab> :NERDTreeToggle<CR>
 
-" Airline
+"Airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 0
+let g:airline_theme = 'monokai_tasty'
 
 " Emmet
 let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
+
+"Syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
