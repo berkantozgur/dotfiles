@@ -9,7 +9,6 @@
 call plug#begin('$HOME/vimfiles/bundle')
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
-Plug 'kien/ctrlp.vim'
 Plug 'w0rp/ale'
 Plug 'ervandew/supertab'
 Plug 'mattn/emmet-vim'
@@ -27,14 +26,17 @@ Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
 
 " Themes
+Plug 'zefei/vim-wintabs'
+"Plug 'zefei/vim-wintabs-powerline'
 Plug 'itchyny/lightline.vim'
-Plug 'morhetz/gruvbox'
+Plug 'gmoe/gruvbox'
 Plug 'mhartington/oceanic-next'
 Plug 'ajmwagar/vim-deus'
 Plug 'patstockwell/vim-monokai-tasty'
 Plug 'kaicataldo/material.vim'
 Plug 'joshdick/onedark.vim'
 Plug 'cocopon/iceberg.vim'
+Plug 'lifepillar/vim-solarized8'
 call plug#end()
 
 "<=================================== Basic Settings ===================================>
@@ -69,7 +71,7 @@ set incsearch
 set hls
 
 if has('gui_running')
-        set guifont=Hack_NF:h14
+        set guifont=Hack_NF:h12
         set guioptions-=m
         set guioptions-=T
         set guioptions-=r
@@ -79,6 +81,7 @@ endif
 filetype off
 filetype plugin indent on
 
+" Mappings
 let g:mapleader=","
 
 nnoremap <space> za
@@ -87,12 +90,23 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+map <C-H> <Plug>(wintabs_previous)
+map <C-L> <Plug>(wintabs_next)
+map <C-T>c <Plug>(wintabs_close)
+map <C-T>u <Plug>(wintabs_undo)
+map <C-T>o <Plug>(wintabs_only)
+map <C-W>c <Plug>(wintabs_close_window)
+
+command! Tabc WintabsCloseVimtab
+command! Tabo WintabsOnlyVimtab
+
 "<=================================== Plugin Settings ==================================>
 
 " Theme
 syntax enable
 set background=dark
-colorscheme material
+let g:gruvbox_italic=0
+colorscheme gruvbox
 
 " NERDTree
 let NERDTreeShowHidden = 1
@@ -105,7 +119,7 @@ map <C-b> :NERDTreeToggle<CR>
 
 " Lightline
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
+      \ 'colorscheme': 'gruvbox',
       \ }
 
 " Emmet
