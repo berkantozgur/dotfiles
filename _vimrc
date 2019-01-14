@@ -10,7 +10,7 @@ call plug#begin('$HOME/vimfiles/bundle')
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'w0rp/ale'
-Plug 'ervandew/supertab'
+"Plug 'ervandew/supertab'
 Plug 'mattn/emmet-vim'
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-surround'
@@ -21,13 +21,24 @@ Plug 'bronson/vim-trailing-whitespace'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-scripts/ZoomWin'
 
+" Completion
+"Plug 'python-mode/python-mode', { 'branch': 'develop' }
+"Plug 'maralla/completor.vim'
+
+Plug 'davidhalter/jedi-vim'
+Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2'
+Plug 'HansPinckaers/ncm2-jedi'
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-path'
+Plug 'roxma/vim-hug-neovim-rpc'
+
 " Git
 Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
 
-" Themes
+" UI
 Plug 'zefei/vim-wintabs'
-"Plug 'zefei/vim-wintabs-powerline'
 Plug 'itchyny/lightline.vim'
 Plug 'gmoe/gruvbox'
 Plug 'mhartington/oceanic-next'
@@ -35,8 +46,8 @@ Plug 'ajmwagar/vim-deus'
 Plug 'patstockwell/vim-monokai-tasty'
 Plug 'kaicataldo/material.vim'
 Plug 'joshdick/onedark.vim'
-Plug 'cocopon/iceberg.vim'
 Plug 'lifepillar/vim-solarized8'
+Plug 'dracula/vim', { 'as': 'dracula' }
 call plug#end()
 
 "<=================================== Basic Settings ===================================>
@@ -100,13 +111,22 @@ map <C-W>c <Plug>(wintabs_close_window)
 command! Tabc WintabsCloseVimtab
 command! Tabo WintabsOnlyVimtab
 
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
+
 "<=================================== Plugin Settings ==================================>
 
 " Theme
 syntax enable
 set background=dark
 let g:gruvbox_italic=0
-colorscheme gruvbox
+colorscheme dracula
+
+" Lightline
+let g:lightline = {
+      \ 'colorscheme': 'Dracula',
+      \ }
 
 " NERDTree
 let NERDTreeShowHidden = 1
@@ -116,11 +136,6 @@ let NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable = '-'
 let g:NERDTreeDirArrowCollapsible = '▾'
 map <C-b> :NERDTreeToggle<CR>
-
-" Lightline
-let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
-      \ }
 
 " Emmet
 let g:user_emmet_install_global = 0
@@ -134,4 +149,21 @@ let g:closetag_xhtml_filetypes = 'xhtml,jsx'
 let g:closetag_emptyTags_caseSensitive = 1
 let g:closetag_shortcut = '>'
 let g:closetag_close_shortcut = '<leader>>'
+
+" Ale
+
+" Completor
+let g:completor_python_binary = 'D:\Python-3.7\Lib\site-packages\jedi'
+
+
+
+let g:jedi#auto_initialization = 1
+let g:jedi#completions_enabled = 0
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#smart_auto_mappings = 0
+let g:jedi#popup_on_dot = 0
+let g:jedi#completions_command = ""
+let g:jedi#show_call_signatures = "1"
+
+
 
