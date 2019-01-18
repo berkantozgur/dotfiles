@@ -9,8 +9,9 @@
 call plug#begin('$HOME/vimfiles/bundle')
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
+Plug 'kien/ctrlp.vim'
+Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'w0rp/ale'
-"Plug 'ervandew/supertab'
 Plug 'mattn/emmet-vim'
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-surround'
@@ -18,39 +19,36 @@ Plug 'spf13/vim-autoclose'
 Plug 'alvan/vim-closetag'
 Plug 'ap/vim-css-color'
 Plug 'bronson/vim-trailing-whitespace'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-scripts/ZoomWin'
+Plug 'othree/html5.vim'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'ajh17/VimCompletesMe'
 
-" Completion
-"Plug 'python-mode/python-mode', { 'branch': 'develop' }
-"Plug 'maralla/completor.vim'
-
-Plug 'davidhalter/jedi-vim'
-Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2'
-Plug 'HansPinckaers/ncm2-jedi'
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-path'
-Plug 'roxma/vim-hug-neovim-rpc'
+"if has('nvim')
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"else
+"Plug 'Valloric/YouCompleteMe'
+"endif
 
 " Git
 Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
 
 " UI
+Plug 'Yggdroot/indentLine'
 Plug 'zefei/vim-wintabs'
+Plug 'zefei/vim-wintabs-powerline'
 Plug 'itchyny/lightline.vim'
 Plug 'gmoe/gruvbox'
-Plug 'mhartington/oceanic-next'
 Plug 'ajmwagar/vim-deus'
-Plug 'patstockwell/vim-monokai-tasty'
 Plug 'kaicataldo/material.vim'
 Plug 'joshdick/onedark.vim'
-Plug 'lifepillar/vim-solarized8'
 Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'arcticicestudio/nord-vim'
 call plug#end()
 
 "<=================================== Basic Settings ===================================>
+
 set t_Co=256
 set termguicolors
 set mouse=a
@@ -75,6 +73,7 @@ set smartindent
 set smarttab
 set shiftround
 set expandtab
+set path+=**
 set laststatus=2
 set noshowmode
 set statusline-=
@@ -82,7 +81,7 @@ set incsearch
 set hls
 
 if has('gui_running')
-        set guifont=Hack_NF:h12
+        set guifont=Source_Code_Pro_for_Powerline:h12
         set guioptions-=m
         set guioptions-=T
         set guioptions-=r
@@ -92,7 +91,12 @@ endif
 filetype off
 filetype plugin indent on
 
-" Mappings
+" Syntax and Completion
+set omnifunc=syntaxcomplete#Complete
+autocmd FileType html let b:vcm_tab_complete = "omni"
+
+"<====================================== Mappings ======================================>
+
 let g:mapleader=","
 
 nnoremap <space> za
@@ -111,22 +115,51 @@ map <C-W>c <Plug>(wintabs_close_window)
 command! Tabc WintabsCloseVimtab
 command! Tabo WintabsOnlyVimtab
 
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 "<=================================== Plugin Settings ==================================>
 
 " Theme
 syntax enable
 set background=dark
-let g:gruvbox_italic=0
-colorscheme dracula
+"let g:gruvbox_italic=0
+let g:nord_comment_brightness = 15
+colorscheme nord
 
 " Lightline
 let g:lightline = {
-      \ 'colorscheme': 'Dracula',
-      \ }
+        \ 'colorscheme': 'nord',
+        \ 'component': {
+        \   'lineinfo': ' %3l:%-2v',
+        \ },
+        \ 'component_function': {
+        \   'readonly': 'LightlineReadonly',
+        \   'fugitive': 'LightlineFugitive'
+        \ },
+        \ 'separator': { 'left': '', 'right': '' },
+        \ 'subseparator': { 'left': '', 'right': '' }
+        \ }
+    function! LightlineReadonly()
+        return &readonly ? '' : ''
+    endfunction
+    function! LightlineFugitive()
+        if exists('*fugitive#head')
+            let branch = fugitive#head()
+            return branch !=# '' ? ''.branch : ''
+        endif
+        return ''
+    endfunction
+
+" Startify
+    "let g:startify_custom_header = [
+                            "\'   _  _  _ _____ _______ ______  ______ _______  . _______      _    _ _____ _______ ',
+                            "\'   |  |  |   |   |_____|  ____/ |_____/    |       |______       \  /    |   |  |  | ',
+                            "\'   |__|__| __|__ |     | /_____ |    \_    |       ______|        \/   __|__ |  |  | ',
+                            "\ ]
+
+" Indentline
+let g:indentLine_enabled = 0
+let g:indentLine_char = '┆'
 
 " NERDTree
 let NERDTreeShowHidden = 1
@@ -137,9 +170,10 @@ let g:NERDTreeDirArrowExpandable = '-'
 let g:NERDTreeDirArrowCollapsible = '▾'
 map <C-b> :NERDTreeToggle<CR>
 
-" Emmet
-let g:user_emmet_install_global = 0
-autocmd FileType html,css EmmetInstall
+" Ctrlp
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+let g:ctrlp_lazy_update = 350
+let g:ctrlp_clear_cache_on_exit = 0
 
 " Close-Tag
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
@@ -150,20 +184,18 @@ let g:closetag_emptyTags_caseSensitive = 1
 let g:closetag_shortcut = '>'
 let g:closetag_close_shortcut = '<leader>>'
 
+" Emmet
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
+
 " Ale
+let g:ale_fix_on_save = 1
+let g:ale_fixers = {'python': ['autopep8']}
 
-" Completor
-let g:completor_python_binary = 'D:\Python-3.7\Lib\site-packages\jedi'
+" YouCompleteMe
+"set completeopt-=preview
+"let g:ycm_add_preview_to_completeopt = 0
+"let g:ycm_key_invoke_completion = '<C-e>'
 
-
-
-let g:jedi#auto_initialization = 1
-let g:jedi#completions_enabled = 0
-let g:jedi#auto_vim_configuration = 0
-let g:jedi#smart_auto_mappings = 0
-let g:jedi#popup_on_dot = 0
-let g:jedi#completions_command = ""
-let g:jedi#show_call_signatures = "1"
-
-
-
+" Deoplete
+"let g:deoplete#enable_at_startup = 1
