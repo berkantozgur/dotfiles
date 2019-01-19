@@ -27,10 +27,10 @@ Plug 'ajh17/VimCompletesMe'
 "if has('nvim')
 "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "else
-"Plug 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe'
 "endif
 
-" Git
+" VCS
 Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
 
@@ -123,12 +123,12 @@ inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 syntax enable
 set background=dark
 "let g:gruvbox_italic=0
-let g:nord_comment_brightness = 15
-colorscheme nord
+"let g:nord_comment_brightness = 15
+colorscheme deus
 
 " Lightline
 let g:lightline = {
-        \ 'colorscheme': 'nord',
+        \ 'colorscheme': 'deus',
         \ 'component': {
         \   'lineinfo': ' %3l:%-2v',
         \ },
@@ -151,15 +151,21 @@ let g:lightline = {
     endfunction
 
 " Startify
-    "let g:startify_custom_header = [
-                            "\'   _  _  _ _____ _______ ______  ______ _______  . _______      _    _ _____ _______ ',
-                            "\'   |  |  |   |   |_____|  ____/ |_____/    |       |______       \  /    |   |  |  | ',
-                            "\'   |__|__| __|__ |     | /_____ |    \_    |       ______|        \/   __|__ |  |  | ',
-                            "\ ]
+    let g:startify_custom_header = [
+                            \'  /$$    /$$ /$$$$$$ /$$      /$$        /$$$$$$       /$$   ',
+                            \' | $$   | $$|_  $$_/| $$$    /$$$       /$$__  $$    /$$$$   ',
+                            \' | $$   | $$  | $$  | $$$$  /$$$$      | $$  \ $$   |_  $$   ',
+                            \' |  $$ / $$/  | $$  | $$ $$/$$ $$      |  $$$$$$/     | $$   ',
+                            \'  \  $$ $$/   | $$  | $$  $$$| $$       >$$__  $$     | $$   ',
+                            \'   \  $$$/    | $$  | $$\  $ | $$      | $$  \ $$     | $$   ',
+                            \'    \  $/    /$$$$$$| $$ \/  | $$      |  $$$$$$//$$ /$$$$$$ ',
+                            \'     \_/    |______/|__/     |__/       \______/|__/|______/ ',
+                            \ ]
 
 " Indentline
 let g:indentLine_enabled = 0
 let g:indentLine_char = '┆'
+let g:indentLine_color_gui = '#A4E57E'
 
 " NERDTree
 let NERDTreeShowHidden = 1
@@ -174,6 +180,9 @@ map <C-b> :NERDTreeToggle<CR>
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 let g:ctrlp_lazy_update = 350
 let g:ctrlp_clear_cache_on_exit = 0
+
+" Signify
+let g:signify_disable_by_default = 1
 
 " Close-Tag
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
@@ -193,9 +202,10 @@ let g:ale_fix_on_save = 1
 let g:ale_fixers = {'python': ['autopep8']}
 
 " YouCompleteMe
-"set completeopt-=preview
-"let g:ycm_add_preview_to_completeopt = 0
-"let g:ycm_key_invoke_completion = '<C-e>'
+set completeopt-=preview
+let g:ycm_add_preview_to_completeopt = 0
+let g:ycm_key_invoke_completion = '<C-e>'
 
 " Deoplete
 "let g:deoplete#enable_at_startup = 1
+
