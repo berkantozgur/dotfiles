@@ -24,11 +24,17 @@ Plug 'othree/html5.vim'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'ajh17/VimCompletesMe'
 
-"if has('nvim')
-"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"else
-Plug 'Valloric/YouCompleteMe'
-"endif
+" Ncm2
+if has('nvim')
+        Plug 'ncm2/ncm2'
+        Plug 'roxma/nvim-yarp'
+        Plug 'HansPinckaers/ncm2-jedi'
+else
+        Plug 'ncm2/ncm2'
+        Plug 'roxma/nvim-yarp'
+        Plug 'HansPinckaers/ncm2-jedi'
+        Plug 'roxma/vim-hug-neovim-rpc'
+endif
 
 " VCS
 Plug 'tpope/vim-fugitive'
@@ -39,49 +45,54 @@ Plug 'Yggdroot/indentLine'
 Plug 'zefei/vim-wintabs'
 Plug 'zefei/vim-wintabs-powerline'
 Plug 'itchyny/lightline.vim'
-Plug 'gmoe/gruvbox'
 Plug 'ajmwagar/vim-deus'
 Plug 'kaicataldo/material.vim'
 Plug 'joshdick/onedark.vim'
-Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'arcticicestudio/nord-vim'
+Plug 'Nequo/vim-allomancer'
 call plug#end()
 
 "<=================================== Basic Settings ===================================>
 
-set t_Co=256
-set termguicolors
-set mouse=a
-set backspace=indent,eol,start
+set nocompatible
 set number
 set relativenumber
 set colorcolumn=90
 set cursorline
+set t_Co=256
+set termguicolors
+set nobackup
+set noswapfile
+set nowritebackup
+set mouse=a
+set backspace=indent,eol,start
+set incsearch
+set hls
+set laststatus=2
+set statusline-=
 set wildmenu
+set showmatch
+set showcmd
 set splitbelow
 set splitright
+set expandtab
+set smarttab
 set bs=2
 set ts=4
 set sw=8
 set encoding=utf-8
+set smartindent
 set autoindent
 set autochdir
-set showmatch
-set showcmd
-set nocompatible
-set smartindent
-set smarttab
 set shiftround
-set expandtab
 set path+=**
-set laststatus=2
+set completeopt=menuone,noselect,noinsert
+set shortmess+=c
 set noshowmode
-set statusline-=
-set incsearch
-set hls
+
 
 if has('gui_running')
-        set guifont=Source_Code_Pro_for_Powerline:h12
+        set guifont=Iosevka_Term_SS09_Semibold:h12
         set guioptions-=m
         set guioptions-=T
         set guioptions-=r
@@ -91,9 +102,25 @@ endif
 filetype off
 filetype plugin indent on
 
-" Syntax and Completion
-set omnifunc=syntaxcomplete#Complete
+" omnifuncs
+augroup omnifuncs
+  autocmd!
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+augroup end
+
 autocmd FileType html let b:vcm_tab_complete = "omni"
+
+function s:ncm2_start(...)
+        if v:vim_did_enter
+            call ncm2#enable_for_buffer()
+        endif
+        autocmd BufEnter * call ncm2#enable_for_buffer()
+endfunc
+call timer_start(500, function('s:ncm2_start'))
 
 "<====================================== Mappings ======================================>
 
@@ -111,11 +138,8 @@ map <C-T>c <Plug>(wintabs_close)
 map <C-T>u <Plug>(wintabs_undo)
 map <C-T>o <Plug>(wintabs_only)
 map <C-W>c <Plug>(wintabs_close_window)
-
 command! Tabc WintabsCloseVimtab
 command! Tabo WintabsOnlyVimtab
-
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 "<=================================== Plugin Settings ==================================>
 
@@ -124,11 +148,11 @@ syntax enable
 set background=dark
 "let g:gruvbox_italic=0
 "let g:nord_comment_brightness = 15
-colorscheme deus
+colorscheme allomancer
 
 " Lightline
 let g:lightline = {
-        \ 'colorscheme': 'deus',
+        \ 'colorscheme': 'jellybeans',
         \ 'component': {
         \   'lineinfo': ' %3l:%-2v',
         \ },
@@ -152,20 +176,20 @@ let g:lightline = {
 
 " Startify
     let g:startify_custom_header = [
-                            \'  /$$    /$$ /$$$$$$ /$$      /$$        /$$$$$$       /$$   ',
-                            \' | $$   | $$|_  $$_/| $$$    /$$$       /$$__  $$    /$$$$   ',
-                            \' | $$   | $$  | $$  | $$$$  /$$$$      | $$  \ $$   |_  $$   ',
-                            \' |  $$ / $$/  | $$  | $$ $$/$$ $$      |  $$$$$$/     | $$   ',
-                            \'  \  $$ $$/   | $$  | $$  $$$| $$       >$$__  $$     | $$   ',
-                            \'   \  $$$/    | $$  | $$\  $ | $$      | $$  \ $$     | $$   ',
-                            \'    \  $/    /$$$$$$| $$ \/  | $$      |  $$$$$$//$$ /$$$$$$ ',
-                            \'     \_/    |______/|__/     |__/       \______/|__/|______/ ',
+                            \'      /$$$$$$  /$$                                                                ',
+                            \'     /$$__  $$| $$                                                                ',
+                            \'    | $$  \__/| $$$$$$$   /$$$$$$   /$$$$$$  /$$$$$$/$$$$   /$$$$$$  /$$$$$$$     ',
+                            \'    |  $$$$$$ | $$__  $$ /$$__  $$ /$$__  $$| $$_  $$_  $$ |____  $$| $$__  $$    ',
+                            \'     \____  $$| $$  \ $$| $$$$$$$$| $$  \__/| $$ \ $$ \ $$  /$$$$$$$| $$  \ $$    ',
+                            \'     /$$  \ $$| $$  | $$| $$_____/| $$      | $$ | $$ | $$ /$$__  $$| $$  | $$    ',
+                            \'    |  $$$$$$/| $$  | $$|  $$$$$$$| $$      | $$ | $$ | $$|  $$$$$$$| $$  | $$    ',
+                            \'     \______/ |__/  |__/ \_______/|__/      |__/ |__/ |__/ \_______/|__/  |__/    ',
                             \ ]
 
 " Indentline
 let g:indentLine_enabled = 0
 let g:indentLine_char = '┆'
-let g:indentLine_color_gui = '#A4E57E'
+let g:indentLine_color_gui = '#FF875F'
 
 " NERDTree
 let NERDTreeShowHidden = 1
@@ -201,11 +225,9 @@ autocmd FileType html,css EmmetInstall
 let g:ale_fix_on_save = 1
 let g:ale_fixers = {'python': ['autopep8']}
 
-" YouCompleteMe
-set completeopt-=preview
-let g:ycm_add_preview_to_completeopt = 0
-let g:ycm_key_invoke_completion = '<C-e>'
-
-" Deoplete
-"let g:deoplete#enable_at_startup = 1
+" ncm2 settings
+let ncm2#popup_delay = 5
+let ncm2#complete_length = [[1, 1]]
+let g:ncm2#matcher = 'substrfuzzy'
+let g:python3_host_prog = 'D:\Python-3.7\python.exe'
 
