@@ -9,8 +9,6 @@
 call plug#begin('$HOME/vimfiles/bundle')
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
-Plug 'kien/ctrlp.vim'
-Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'w0rp/ale'
 Plug 'mattn/emmet-vim'
 Plug 'mhinz/vim-startify'
@@ -41,15 +39,14 @@ Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
 
 " UI
-Plug 'Yggdroot/indentLine'
-Plug 'zefei/vim-wintabs'
-Plug 'zefei/vim-wintabs-powerline'
 Plug 'itchyny/lightline.vim'
+Plug 'maximbaz/lightline-ale'
+Plug 'Yggdroot/indentLine'
+Plug 'gmoe/gruvbox'
 Plug 'ajmwagar/vim-deus'
-Plug 'kaicataldo/material.vim'
 Plug 'joshdick/onedark.vim'
-Plug 'arcticicestudio/nord-vim'
 Plug 'Nequo/vim-allomancer'
+Plug 'tyrannicaltoucan/vim-deep-space'
 call plug#end()
 
 "<=================================== Basic Settings ===================================>
@@ -69,9 +66,11 @@ set backspace=indent,eol,start
 set incsearch
 set hls
 set laststatus=2
+set showtabline=2
 set statusline-=
 set wildmenu
 set showmatch
+set ruler
 set showcmd
 set splitbelow
 set splitright
@@ -92,7 +91,8 @@ set noshowmode
 
 
 if has('gui_running')
-        set guifont=Iosevka_Term_SS09_Semibold:h12
+        set guifont=Iosevka_Term_SS09_Semibold:h11
+        set guioptions-=e
         set guioptions-=m
         set guioptions-=T
         set guioptions-=r
@@ -113,7 +113,9 @@ augroup omnifuncs
 augroup end
 
 autocmd FileType html let b:vcm_tab_complete = "omni"
+autocmd FileType css let b:vcm_tab_complete = "omni"
 
+" Ncm2
 function s:ncm2_start(...)
         if v:vim_did_enter
             call ncm2#enable_for_buffer()
@@ -132,59 +134,51 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-map <C-H> <Plug>(wintabs_previous)
-map <C-L> <Plug>(wintabs_next)
-map <C-T>c <Plug>(wintabs_close)
-map <C-T>u <Plug>(wintabs_undo)
-map <C-T>o <Plug>(wintabs_only)
-map <C-W>c <Plug>(wintabs_close_window)
-command! Tabc WintabsCloseVimtab
-command! Tabo WintabsOnlyVimtab
+nnoremap <Left> :bprev<CR>
+nnoremap <Right> :bnext<CR>
 
 "<=================================== Plugin Settings ==================================>
 
 " Theme
 syntax enable
 set background=dark
-"let g:gruvbox_italic=0
-"let g:nord_comment_brightness = 15
-colorscheme allomancer
+let g:gruvbox_italic=0
+colorscheme gruvbox
 
 " Lightline
 let g:lightline = {
-        \ 'colorscheme': 'jellybeans',
-        \ 'component': {
-        \   'lineinfo': ' %3l:%-2v',
-        \ },
-        \ 'component_function': {
-        \   'readonly': 'LightlineReadonly',
-        \   'fugitive': 'LightlineFugitive'
-        \ },
-        \ 'separator': { 'left': '', 'right': '' },
-        \ 'subseparator': { 'left': '', 'right': '' }
-        \ }
-    function! LightlineReadonly()
-        return &readonly ? '' : ''
-    endfunction
-    function! LightlineFugitive()
-        if exists('*fugitive#head')
-            let branch = fugitive#head()
-            return branch !=# '' ? ''.branch : ''
-        endif
-        return ''
-    endfunction
-
-" Startify
-    let g:startify_custom_header = [
-                            \'      /$$$$$$  /$$                                                                ',
-                            \'     /$$__  $$| $$                                                                ',
-                            \'    | $$  \__/| $$$$$$$   /$$$$$$   /$$$$$$  /$$$$$$/$$$$   /$$$$$$  /$$$$$$$     ',
-                            \'    |  $$$$$$ | $$__  $$ /$$__  $$ /$$__  $$| $$_  $$_  $$ |____  $$| $$__  $$    ',
-                            \'     \____  $$| $$  \ $$| $$$$$$$$| $$  \__/| $$ \ $$ \ $$  /$$$$$$$| $$  \ $$    ',
-                            \'     /$$  \ $$| $$  | $$| $$_____/| $$      | $$ | $$ | $$ /$$__  $$| $$  | $$    ',
-                            \'    |  $$$$$$/| $$  | $$|  $$$$$$$| $$      | $$ | $$ | $$|  $$$$$$$| $$  | $$    ',
-                            \'     \______/ |__/  |__/ \_______/|__/      |__/ |__/ |__/ \_______/|__/  |__/    ',
-                            \ ]
+      \ 'colorscheme': 'gruvbox',
+      \ 'active': {
+      \   'left': [ ['mode', 'paste'],
+      \             ['fugitive', 'readonly', 'filename', 'modified'] ],
+      \   'right': [ [ 'lineinfo' ], ['percent'],
+      \              [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ] ]
+      \ },
+      \ 'component': {
+      \   'readonly': '%{&filetype=="help"?"":&readonly?"🔒":""}',
+      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
+      \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+      \ },
+      \ 'component_visible_condition': {
+      \   'readonly': '(&filetype!="help"&& &readonly)',
+      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+      \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+      \ },
+      \ 'component_expand': {
+      \   'linter_checking': 'lightline#ale#checking',
+      \   'linter_warnings': 'lightline#ale#warnings',
+      \   'linter_errors': 'lightline#ale#errors',
+      \   'linter_ok': 'lightline#ale#ok',
+      \ },
+      \ 'component_type': {
+      \   'linter_checking': 'left',
+      \   'linter_warnings': 'warning',
+      \   'linter_errors': 'error',
+      \   'linter_ok': 'left',
+      \ },
+      \ 'separator': { 'left': ' ', 'right': ' ' },
+      \ 'subseparator': { 'left': ' ', 'right': ' ' }
+      \ }
 
 " Indentline
 let g:indentLine_enabled = 0
@@ -199,11 +193,6 @@ let NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable = '-'
 let g:NERDTreeDirArrowCollapsible = '▾'
 map <C-b> :NERDTreeToggle<CR>
-
-" Ctrlp
-let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-let g:ctrlp_lazy_update = 350
-let g:ctrlp_clear_cache_on_exit = 0
 
 " Signify
 let g:signify_disable_by_default = 1
