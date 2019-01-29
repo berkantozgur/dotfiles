@@ -8,6 +8,7 @@
 
 call plug#begin('$HOME/vimfiles/bundle')
 Plug 'scrooloose/nerdtree'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'scrooloose/nerdcommenter'
 Plug 'w0rp/ale'
 Plug 'mattn/emmet-vim'
@@ -43,6 +44,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'maximbaz/lightline-ale'
 Plug 'Yggdroot/indentLine'
 Plug 'gmoe/gruvbox'
+Plug 'ayu-theme/ayu-vim'
 Plug 'ajmwagar/vim-deus'
 Plug 'joshdick/onedark.vim'
 Plug 'Nequo/vim-allomancer'
@@ -91,12 +93,19 @@ set noshowmode
 
 
 if has('gui_running')
-        set guifont=Iosevka_Term_SS09_Semibold:h11
+        set guifont=Iosevka_Term_SS09_Semibold:h12
         set guioptions-=e
         set guioptions-=m
         set guioptions-=T
         set guioptions-=r
         set guioptions-=L
+
+        if $VIM_FULLSCREEN_DLL_FIX
+                else
+            autocmd GUIEnter * call libcall("loadfixgvimborder.dll", "LoadFixGVimBorder", "#282828")
+            let $VIM_FULLSCREEN_DLL_FIX = 1
+        endif
+
 endif
 
 filetype off
@@ -142,16 +151,17 @@ nnoremap <Right> :bnext<CR>
 " Theme
 syntax enable
 set background=dark
-let g:gruvbox_italic=0
-colorscheme gruvbox
+"let g:gruvbox_italic=0
+let ayucolor="mirage"
+colorscheme ayu
 
 " Lightline
 let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
+      \ 'colorscheme': 'ayu',
       \ 'active': {
       \   'left': [ ['mode', 'paste'],
       \             ['fugitive', 'readonly', 'filename', 'modified'] ],
-      \   'right': [ [ 'lineinfo' ], ['percent'],
+      \   'right': [ [ 'lineinfo' ], ['percent'], ['filetype'],
       \              [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ] ]
       \ },
       \ 'component': {
@@ -176,23 +186,31 @@ let g:lightline = {
       \   'linter_errors': 'error',
       \   'linter_ok': 'left',
       \ },
-      \ 'separator': { 'left': ' ', 'right': ' ' },
-      \ 'subseparator': { 'left': ' ', 'right': ' ' }
+	  \ 'separator': { 'left': '', 'right': '' },
+	  \ 'subseparator': { 'left': '', 'right': '' }
       \ }
 
+      "\ 'separator': { 'left': ' ', 'right': ' ' },
+      "\ 'subseparator': { 'left': ' ', 'right': ' ' }
+
 " Indentline
-let g:indentLine_enabled = 0
-let g:indentLine_char = '┆'
-let g:indentLine_color_gui = '#FF875F'
+let g:indentLine_char = '|'
+let g:indentLine_first_char = '|'
+let g:indentLine_showFirstIndentLevel = 1
+let g:indentLine_setColors = 0
 
 " NERDTree
 let NERDTreeShowHidden = 1
 let NERDTreeMinimalUI = 1
 let g:NERDTreeShowBookmarks = 1
 let NERDTreeDirArrows = 1
-let g:NERDTreeDirArrowExpandable = '-'
+let g:NERDTreeDirArrowExpandable = '›'
 let g:NERDTreeDirArrowCollapsible = '▾'
 map <C-b> :NERDTreeToggle<CR>
+
+let g:NERDTreeFileExtensionHighlightFullName = 1
+let g:NERDTreeExactMatchHighlightFullName = 1
+let g:NERDTreePatternMatchHighlightFullName = 1
 
 " Signify
 let g:signify_disable_by_default = 1
