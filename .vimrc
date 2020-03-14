@@ -39,7 +39,8 @@ Plug 'gmoe/gruvbox'
 Plug 'ayu-theme/ayu-vim'
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'junegunn/seoul256.vim'
-Plug 'kaicataldo/material.vim'
+"Plug 'kaicataldo/material.vim'
+Plug 'simonsmith/material.vim'
 
 " Features
 Plug 'scrooloose/nerdcommenter'
