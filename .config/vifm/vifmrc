@@ -57,7 +57,7 @@ set norunexec
 
 " Selected color scheme
 
-colorscheme Default
+colorscheme onedark
 
 " Format for displaying time in file list. For example:
 " TIME_STAMP_FORMAT=%m/%d-%H:%M
@@ -350,7 +350,8 @@ filextype */
         \ Thunar %f &,
 
 " Syntax highlighting in preview
-"
+fileviewer *.conf,*.ini,*.lua,*.hs,.vimrc,*.py,*.vim,*.sh,*.html,*.go,*.css highlight -O xterm256 -s base16/onedark %c
+
 " Explicitly set highlight type for some extensions
 "
 " 256-color terminal
