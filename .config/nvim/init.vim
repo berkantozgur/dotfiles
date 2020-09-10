@@ -1,19 +1,21 @@
- 
-  "  __      _______ __  __ _____   _____ 
-  "  \ \    / /_   _|  \/  |  __ \ / ____|
-  "   \ \  / /  | | | \  / | |__) | |     
-  "    \ \/ /   | | | |\/| |  _  /| |     
-  "     \  /   _| |_| |  | | | \ \| |____ 
-  "      \/   |_____|_|  |_|_|  \_\\_____|
+"    _       _ __        _
+"   (_)___  (_) /__   __(_)___ ___
+"  / / __ \/ / __/ | / / / __ `__ \
+" / / / / / / /__| |/ / / / / / / /
+"/_/_/ /_/_/\__(_)___/_/_/ /_/ /_/
 
-call plug#begin('$HOME/.vim/bundle')
+call plug#begin('$HOME/.config/nvim/bundle')
 
 " Programming 
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-Plug 'HansPinckaers/ncm2-jedi'
-Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
-Plug 'ncm2/ncm2-vim' | Plug 'Shougo/neco-vim'
+"Plug 'ncm2/ncm2'
+"Plug 'roxma/nvim-yarp'
+"Plug 'HansPinckaers/ncm2-jedi'
+"Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
+"Plug 'ncm2/ncm2-vim' | Plug 'Shougo/neco-vim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'zchee/deoplete-jedi'
+Plug 'Shougo/neco-vim'
+Plug 'davidhalter/jedi-vim'
 Plug 'w0rp/ale'
 Plug 'ajh17/VimCompletesMe'
 Plug 'sheerun/vim-polyglot'
@@ -24,13 +26,19 @@ Plug 'mhinz/vim-signify'
 Plug 'junegunn/gv.vim'
 "Plug 'jreybert/vimagit'
 
+" File Manager
+Plug 'scrooloose/nerdtree'
+Plug 'vifm/vifm.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
 " UI
 Plug 'mhinz/vim-startify'
-Plug 'scrooloose/nerdtree'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'chrisbra/colorizer'
-Plug 'oblitum/rainbow'
+Plug 'ryanoasis/vim-devicons'
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
+Plug 'frazrepo/vim-rainbow'
 Plug 'itchyny/lightline.vim'
+Plug 'daviesjamie/vim-base16-lightline'
 Plug 'maximbaz/lightline-ale'
 Plug 'Yggdroot/indentLine'
 
@@ -39,15 +47,16 @@ Plug 'gmoe/gruvbox'
 Plug 'ayu-theme/ayu-vim'
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'simonsmith/material.vim'
+Plug 'joshdick/onedark.vim'
+Plug 'chriskempson/base16-vim'
 
 " Misc
 Plug 'scrooloose/nerdcommenter'
-Plug 'spf13/vim-autoclose'
-Plug 'matze/vim-move'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
 Plug 'mattn/emmet-vim'
 Plug 'alvan/vim-closetag'
-Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
-Plug 'junegunn/limelight.vim', { 'on': 'Goyo' }
 Plug 'vimwiki/vimwiki'
 
 call plug#end()
@@ -122,15 +131,20 @@ augroup ws
 augroup end
 
 " Ncm2
-function s:ncm2_start(...)
-        if v:vim_did_enter
-            call ncm2#enable_for_buffer()
-        endif
-        autocmd BufEnter * call ncm2#enable_for_buffer()
-endfunc
-call timer_start(500, function('s:ncm2_start'))
+"function s:ncm2_start(...)
+        "if v:vim_did_enter
+            "call ncm2#enable_for_buffer()
+        "endif
+        "autocmd BufEnter * call ncm2#enable_for_buffer()
+"endfunc
+"call timer_start(500, function('s:ncm2_start'))
+
+" Deoplete
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 "<====================================== Mappings ======================================>
+
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 let g:mapleader=","
 
@@ -144,24 +158,25 @@ nnoremap <Right> :bnext<CR>
 
 map <C-b> :NERDTreeToggle<CR>
 
+" Vifm
+map <Leader>vv :Vifm<CR>
+
 "<===================================== Colorscheme ====================================>
 
 set background=dark
-"let g:gruvbox_italic=0
-"let ayucolor="mirage"
-"let g:seoul256_background = 234
-"let g:material_theme_style = 'default'
-colorscheme material
+"colorscheme material
+colorscheme base16-default-dark
 
 "<=================================== Plugin Settings ==================================>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Ncm2
+" => Ncm2, Deoplete 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let ncm2#popup_delay = 5
-let ncm2#complete_length = [[1, 1]]
-let g:ncm2#matcher = 'substrfuzzy'
-let g:python3_host_prog = '/usr/bin/python3'
+"let ncm2#popup_delay = 5
+"let ncm2#complete_length = [[1, 1]]
+"let g:ncm2#matcher = 'substrfuzzy'
+
+let g:deoplete#enable_at_startup = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Ale
@@ -170,8 +185,12 @@ let g:ale_fix_on_save = 1
 let g:ale_fixers = {'python': ['autopep8']}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Python
+" => Python, Jedi
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:jedi#completions_enabled = 0
+let g:jedi#use_splits_not_buffers = "right"
+
+let g:python3_host_prog = '/usr/bin/python3'
 let g:python_highlight_all = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -201,11 +220,9 @@ let g:signify_disable_by_default = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let NERDTreeShowHidden = 1
 let NERDTreeMinimalUI = 1
-let NERDTreeShowLineNumbers = 1
 let g:NERDTreeWinPos = "right"
-let g:NERDTreeDirArrowExpandable = 'Ψ'
-let g:NERDTreeDirArrowCollapsible = 'Ω'
-"let g:NERDTreeDirArrowExpandable = '›'
+let g:NERDTreeDirArrowExpandable = '►'
+let g:NERDTreeDirArrowCollapsible = '▼'
 
 let g:NERDTreeFileExtensionHighlightFullName = 1
 let g:NERDTreeExactMatchHighlightFullName = 1
@@ -215,7 +232,8 @@ let g:NERDTreePatternMatchHighlightFullName = 1
 " => Lightline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:lightline = {
-      \ 'colorscheme': 'material_vim',
+      "\ 'colorscheme': 'material_vim',
+      \ 'colorscheme': 'base16',
       \ 'active': {
       \   'left': [ ['mode', 'paste'],
       \             ['fugitive', 'readonly', 'filename', 'modified'] ],
@@ -227,6 +245,10 @@ let g:lightline = {
       \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
       \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
       \ },
+      \ 'component_function': {
+      \   'filetype': 'MyFiletype',
+      \   'fileformat': 'MyFileformat'
+      \ },
       \ 'component_visible_condition': {
       \   'readonly': '(&filetype!="help"&& &readonly)',
       \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
@@ -234,19 +256,29 @@ let g:lightline = {
       \ },
       \ 'component_expand': {
       \   'linter_checking': 'lightline#ale#checking',
+      \  'linter_infos': 'lightline#ale#infos',
       \   'linter_warnings': 'lightline#ale#warnings',
       \   'linter_errors': 'lightline#ale#errors',
       \   'linter_ok': 'lightline#ale#ok',
       \ },
       \ 'component_type': {
-      \   'linter_checking': 'left',
+      \   'linter_checking': 'right',
+      \   'linter_infos': 'right',
       \   'linter_warnings': 'warning',
       \   'linter_errors': 'error',
-      \   'linter_ok': 'left',
+      \   'linter_ok': 'right',
       \ },
-      \ 'separator': { 'left': ' ', 'right': ' ' },
-      \ 'subseparator': { 'left': ' ', 'right': ' ' }
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '', 'right': '' }
       \ }
+
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+endfunction
+
+function! MyFileformat()
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+endfunction
 
       "\ 'separator': { 'left': '', 'right': '' },
       "\ 'subseparator': { 'left': '', 'right': '' }
@@ -260,6 +292,11 @@ let g:lightline = {
 let g:indentLine_char = '¦'
 let g:indentLine_first_char = '¦'
 let g:indentLine_showFirstIndentLevel = 1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Colorizer
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:Hexokinase_highlighters = [ 'background' ]
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Rainbow
