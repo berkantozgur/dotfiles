@@ -1,0 +1,328 @@
+# Any items in the `env` entry below will be added as
+# environment variables. Some entries may override variables
+# set by alacritty itself.
+#env:
+  # TERM variable
+  #
+  # This value is used to set the `$TERM` environment variable for
+  # each instance of Alacritty. If it is not present, alacritty will
+  # check the local terminfo database and use `alacritty` if it is
+  # available, otherwise `xterm-256color` is used.
+  #TERM: alacritty
+
+#scrolling:
+  # Maximum number of lines in the scrollback buffer.
+  # Specifying '0' will disable scrolling.
+  #history: 10000
+
+  # Scrolling distance multiplier.
+  #multiplier: 3
+
+# Font configuration
+font:
+  # Normal (roman) font face
+  normal:
+    # Font family
+    #
+    # Default:
+    #   - (macOS) Menlo
+    #   - (Linux/BSD) monospace
+    #   - (Windows) Consolas
+    family: FiraCode Nerd Font
+
+    # The `style` can be specified to pick a specific face.
+    #style: Regular
+
+  # Bold font face
+  bold:
+    # Font family
+    #
+    # If the bold family is not specified, it will fall back to the
+    # value specified for the normal font.
+    family: FiraCode Nerd Font
+
+    # The `style` can be specified to pick a specific face.
+    #style: Bold
+
+  # Italic font face
+  italic:
+    # Font family
+    #
+    # If the italic family is not specified, it will fall back to the
+    # value specified for the normal font.
+    family: FiraCode Nerd Font
+
+    # The `style` can be specified to pick a specific face.
+    #style: Italic
+
+  # Bold italic font face
+  #bold_italic:
+    # Font family
+    #
+    # If the bold italic family is not specified, it will fall back to the
+    # value specified for the normal font.
+    #family: monospace
+
+    # The `style` can be specified to pick a specific face.
+    #style: Bold Italic
+
+  # Point size
+  size: 12.0
+
+# Colors (Spacegray)
+colors:
+  # Default colors
+  primary:
+    background: '0x111314'
+    foreground: '0xb7bbb7'
+
+  # Normal colors
+  normal:
+    #black:   '0x2c2f33'
+    black:   '0x111314'
+    red:     '0xb04c50'
+    green:   '0x919652'
+    yellow:  '0xe2995c'
+    blue:    '0x66899d'
+    magenta: '0x8d6494'
+    cyan:    '0x527c77'
+    white:   '0x606360'
+
+  # Bright colors
+  bright:
+    black:   '0x4b5056'
+    red:     '0xb04c50'
+    green:   '0x94985b'
+    yellow:  '0xe2995c'
+    blue:    '0x66899d'
+    magenta: '0x8d6494'
+    cyan:    '0x527c77'
+    white:   '0xdde3dc'
+
+## Colors (Doom One)
+#colors:
+  ## Default colors
+  #primary:
+    #background: '0x282c34'
+    #foreground: '0xbbc2cf'
+
+  ## Normal colors
+  #normal:
+    #black:   '0x282c34'
+    #red:     '0xff6c6b'
+    #green:   '0x98be65'
+    #yellow:  '0xecbe7b'
+    #blue:    '0x51afef'
+    #magenta: '0xc678dd'
+    #cyan:    '0x46d9ff'
+    #white:   '0xbbc2cf'
+
+## Colors (Tomorrow Night)
+#colors:
+  ## Default colors
+  #primary:
+    #background: '0x1d1f21'
+    #foreground: '0xc5c8c6'
+
+  ## Colors the cursor will use if `custom_cursor_colors` is true
+  #cursor:
+    #text: '0x1d1f21'
+    #cursor: '0xffffff'
+
+  ## Normal colors
+  #normal:
+    #black:   '0x1d1f21'
+    #red:     '0xcc6666'
+    #green:   '0xb5bd68'
+    #yellow:  '0xe6c547'
+    #blue:    '0x81a2be'
+    #magenta: '0xb294bb'
+    #cyan:    '0x70c0ba'
+    #white:   '0x373b41'
+
+  ## Bright colors
+  #bright:
+    #black:   '0x666666'
+    #red:     '0xff3334'
+    #green:   '0x9ec400'
+    #yellow:  '0xf0c674'
+    #blue:    '0x81a2be'
+    #magenta: '0xb77ee0'
+    #cyan:    '0x54ced6'
+    #white:   '0x282a2e'
+
+# #Colors (Dracula)
+#colors:
+# #Default colors
+  #primary:
+    #background: '0x282a36'
+    #foreground: '0xf8f8f2'
+ 
+   #Normal colors
+  #normal:
+    #black:   '0x000000'
+    #red:     '0xff5555'
+    #green:   '0x50fa7b'
+    #yellow:  '0xf1fa8c'
+    #blue:    '0xbd93f9'
+    #magenta: '0xff79c6'
+    #cyan:    '0x8be9fd'
+    #white:   '0xbbbbbb'
+ 
+   #Bright colors
+  #bright:
+    #black:   '0x555555'
+    #red:     '0xff5555'
+    #green:   '0x50fa7b'
+    #yellow:  '0xf1fa8c'
+    #blue:    '0xcaa9fa'
+    #magenta: '0xff79c6'
+    #cyan:    '0x8be9fd'
+    #white:   '0xffffff'
+
+## Colors (Terminal.app)
+#colors:
+  ## Default colors
+  #primary:
+    #background: '0x000000'
+    #foreground: '0xb6b6b6'
+
+  ## Normal colors
+  #normal:
+    #black:   '0x000000'
+    #red:     '0x990000'
+    #green:   '0x00a600'
+    #yellow:  '0x999900'
+    #blue:    '0x0000b2'
+    #magenta: '0xb200b2'
+    #cyan:    '0x00a6b2'
+    #white:   '0xbfbfbf'
+
+  ## Bright colors
+  #bright:
+    #black:   '0x666666'
+    #red:     '0xe50000'
+    #green:   '0x00d900'
+    #yellow:  '0xe5e500'
+    #blue:    '0x0000ff'
+    #magenta: '0xe500e5'
+    #cyan:    '0x00e5e5'
+    #white:   '0xe5e5e5'
+
+# Background opacity
+# Window opacity as a floating point number from `0.0` to `1.0`.
+# The value `0.0` is completely transparent and `1.0` is opaque.
+background_opacity: 0.97
+
+selection:
+  #semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
+
+  # When set to `true`, selected text will be copied to the primary clipboard.
+  save_to_clipboard: true
+
+# Allow terminal applications to change Alacritty's window title.
+#dynamic_title: true
+
+cursor:
+  # Cursor style
+  #
+  # Values for `style`:
+  #   - ▇ Block
+  #   - _ Underline
+  #   - | Beam
+  style: Block
+
+  # Vi mode cursor style
+  #
+  # If the vi mode cursor style is `None` or not specified, it will fall back to
+  # the style of the active value of the normal cursor.
+  #
+  # See `cursor.style` for available options.
+  #vi_mode_style: None
+
+  # If this is `true`, the cursor will be rendered as a hollow box when the
+  # window is not focused.
+  #unfocused_hollow: true
+
+  # Thickness of the cursor relative to the cell width as floating point number
+  # from `0.0` to `1.0`.
+  #thickness: 0.15
+
+# Live config reload (changes require restart)
+live_config_reload: true
+
+shell:
+  program: /bin/zsh
+
+key_bindings:
+  - { key: Paste,                                action: Paste          }
+  - { key: Copy,                                 action: Copy           }
+  - { key: L,         mods: Control,             action: ClearLogNotice }
+  - { key: L,         mods: Control, mode: ~Vi,  chars: "\x0c"          }
+  - { key: PageUp,    mods: Shift,   mode: ~Alt, action: ScrollPageUp,  }
+  - { key: PageDown,  mods: Shift,   mode: ~Alt, action: ScrollPageDown }
+  - { key: Home,      mods: Shift,   mode: ~Alt, action: ScrollToTop,   }
+  - { key: End,       mods: Shift,   mode: ~Alt, action: ScrollToBottom }
+
+#   Vi Mode
+  - { key: Space,  mods: Shift|Control, mode: Vi, action: ScrollToBottom          }
+  - { key: Space,  mods: Shift|Control,           action: ToggleViMode            }
+  - { key: Escape,                      mode: Vi, action: ClearSelection          }
+  - { key: I,                           mode: Vi, action: ScrollToBottom          }
+  - { key: I,                           mode: Vi, action: ToggleViMode            }
+  - { key: Y,      mods: Control,       mode: Vi, action: ScrollLineUp            }
+  - { key: E,      mods: Control,       mode: Vi, action: ScrollLineDown          }
+  - { key: G,                           mode: Vi, action: ScrollToTop             }
+  - { key: G,      mods: Shift,         mode: Vi, action: ScrollToBottom          }
+  - { key: B,      mods: Control,       mode: Vi, action: ScrollPageUp            }
+  - { key: F,      mods: Control,       mode: Vi, action: ScrollPageDown          }
+  - { key: U,      mods: Control,       mode: Vi, action: ScrollHalfPageUp        }
+  - { key: D,      mods: Control,       mode: Vi, action: ScrollHalfPageDown      }
+  - { key: Y,                           mode: Vi, action: Copy                    }
+  - { key: Y,                           mode: Vi, action: ClearSelection          }
+  - { key: Copy,                        mode: Vi, action: ClearSelection          }
+  - { key: V,                           mode: Vi, action: ToggleNormalSelection   }
+  - { key: V,      mods: Shift,         mode: Vi, action: ToggleLineSelection     }
+  - { key: V,      mods: Control,       mode: Vi, action: ToggleBlockSelection    }
+  - { key: V,      mods: Alt,           mode: Vi, action: ToggleSemanticSelection }
+  - { key: Return,                      mode: Vi, action: Open                    }
+  - { key: K,                           mode: Vi, action: Up                      }
+  - { key: J,                           mode: Vi, action: Down                    }
+  - { key: H,                           mode: Vi, action: Left                    }
+  - { key: L,                           mode: Vi, action: Right                   }
+  - { key: Up,                          mode: Vi, action: Up                      }
+  - { key: Down,                        mode: Vi, action: Down                    }
+  - { key: Left,                        mode: Vi, action: Left                    }
+  - { key: Right,                       mode: Vi, action: Right                   }
+  - { key: Key0,                        mode: Vi, action: First                   }
+  - { key: Key4,   mods: Shift,         mode: Vi, action: Last                    }
+  - { key: Key6,   mods: Shift,         mode: Vi, action: FirstOccupied           }
+  - { key: H,      mods: Shift,         mode: Vi, action: High                    }
+  - { key: M,      mods: Shift,         mode: Vi, action: Middle                  }
+  - { key: L,      mods: Shift,         mode: Vi, action: Low                     }
+  - { key: B,                           mode: Vi, action: SemanticLeft            }
+  - { key: W,                           mode: Vi, action: SemanticRight           }
+  - { key: E,                           mode: Vi, action: SemanticRightEnd        }
+  - { key: B,      mods: Shift,         mode: Vi, action: WordLeft                }
+  - { key: W,      mods: Shift,         mode: Vi, action: WordRight               }
+  - { key: E,      mods: Shift,         mode: Vi, action: WordRightEnd            }
+  - { key: Key5,   mods: Shift,         mode: Vi, action: Bracket                 }
+  - { key: Slash,                       mode: Vi, action: SearchForward           }
+  - { key: Slash,  mods: Shift,         mode: Vi, action: SearchBackward          }
+  - { key: N,                           mode: Vi, action: SearchNext              }
+  - { key: N,      mods: Shift,         mode: Vi, action: SearchPrevious          }
+
+#   (Windows, Linux, and BSD only)
+  - { key: V,        mods: Alt,                           action: Paste            }
+  - { key: C,        mods: Alt,                           action: Copy             }
+  - { key: F,        mods: Control|Shift,                 action: SearchForward    }
+  - { key: B,        mods: Control|Shift,                 action: SearchBackward   }
+  - { key: C,        mods: Control|Shift, mode: Vi,       action: ClearSelection   }
+  - { key: Insert,   mods: Shift,                         action: PasteSelection   }
+  - { key: Key0,     mods: Control,                       action: ResetFontSize    }
+  - { key: Equals,   mods: Control,                       action: IncreaseFontSize }
+  - { key: Add,      mods: Control|Shift,                 action: IncreaseFontSize }
+  - { key: Subtract, mods: Control,                       action: DecreaseFontSize }
+  - { key: Minus,    mods: Control,                       action: DecreaseFontSize }
+  - { key: F11,                                           action: ToggleFullscreen }
+
