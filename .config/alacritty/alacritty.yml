@@ -69,7 +69,37 @@ font:
   # Point size
   size: 12.0
 
-# Colors (Spacegray)
+## Colors (Spacegray)
+#colors:
+  ## Default colors
+  #primary:
+    #background: '0x111314'
+    #foreground: '0xb7bbb7'
+
+  ## Normal colors
+  #normal:
+    ##black:   '0x2c2f33'
+    #black:   '0x111314'
+    #red:     '0xb04c50'
+    #green:   '0x919652'
+    #yellow:  '0xe2995c'
+    #blue:    '0x66899d'
+    #magenta: '0x8d6494'
+    #cyan:    '0x527c77'
+    #white:   '0x606360'
+
+  ## Bright colors
+  #bright:
+    #black:   '0x4b5056'
+    #red:     '0xb04c50'
+    #green:   '0x94985b'
+    #yellow:  '0xe2995c'
+    #blue:    '0x66899d'
+    #magenta: '0x8d6494'
+    #cyan:    '0x527c77'
+    #white:   '0xdde3dc'
+
+# Colors (Wombat)
 colors:
   # Default colors
   primary:
@@ -78,26 +108,25 @@ colors:
 
   # Normal colors
   normal:
-    #black:   '0x2c2f33'
     black:   '0x111314'
-    red:     '0xb04c50'
-    green:   '0x919652'
-    yellow:  '0xe2995c'
-    blue:    '0x66899d'
-    magenta: '0x8d6494'
-    cyan:    '0x527c77'
-    white:   '0x606360'
+    red:     '0xf7786d'
+    green:   '0xbde97c'
+    yellow:  '0xefdfac'
+    blue:    '0x6ebaf8'
+    magenta: '0xef88ff'
+    cyan:    '0x90fdf8'
+    white:   '0xe5e1d8'
 
   # Bright colors
   bright:
-    black:   '0x4b5056'
-    red:     '0xb04c50'
-    green:   '0x94985b'
-    yellow:  '0xe2995c'
-    blue:    '0x66899d'
-    magenta: '0x8d6494'
-    cyan:    '0x527c77'
-    white:   '0xdde3dc'
+    black:   '0xb4b4b4'
+    red:     '0xf99f92'
+    green:   '0xe3f7a1'
+    yellow:  '0xf2e9bf'
+    blue:    '0xb3d2ff'
+    magenta: '0xe5bdff'
+    cyan:    '0xc2fefa'
+    white:   '0xffffff'
 
 ## Colors (Doom One)
 #colors:
@@ -320,9 +349,9 @@ key_bindings:
   - { key: C,        mods: Control|Shift, mode: Vi,       action: ClearSelection   }
   - { key: Insert,   mods: Shift,                         action: PasteSelection   }
   - { key: Key0,     mods: Control,                       action: ResetFontSize    }
-  - { key: Equals,   mods: Control,                       action: IncreaseFontSize }
-  - { key: Add,      mods: Control|Shift,                 action: IncreaseFontSize }
-  - { key: Subtract, mods: Control,                       action: DecreaseFontSize }
+  - { key: Equals,   mods: Control|Shift,                       action: IncreaseFontSize }
+  #- { key: Add,      mods: Control|Shift,                 action: IncreaseFontSize }
+  #- { key: Subtract, mods: Control,                       action: DecreaseFontSize }
   - { key: Minus,    mods: Control,                       action: DecreaseFontSize }
   - { key: F11,                                           action: ToggleFullscreen }
 

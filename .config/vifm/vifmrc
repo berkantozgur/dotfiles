@@ -350,7 +350,7 @@ filextype */
         \ Thunar %f &,
 
 " Syntax highlighting in preview
-fileviewer *.conf,*.ini,*.lua,*.hs,.vimrc,*.py,*.vim,*.sh,*.html,*.go,*.css highlight -O xterm256 -s base16/onedark %c
+fileviewer *.conf,*.ini,*.lua,*.hs,.vimrc,*.py,*.vim,*.sh,*.html,*.go,*.css highlight -O xterm256 -s dante %c
 
 " Explicitly set highlight type for some extensions
 "
